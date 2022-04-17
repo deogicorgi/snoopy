@@ -39,6 +39,7 @@ subprojects {
                 entry 'spring-boot'
                 entry 'spring-boot-test'
                 entry 'spring-boot-starter'
+                entry 'spring-boot-starter-security'
                 entry 'spring-boot-starter-test'
                 entry 'spring-boot-test-autoconfigure'
             }
