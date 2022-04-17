@@ -1,0 +1,23 @@
+plugins {
+    id 'java'
+    id 'java-library'
+}
+
+group 'com.github.deogicorgi'
+version '0.0.1'
+
+bootJar {
+    enabled = false
+}
+
+jar {
+    enabled = true
+}
+
+dependencies {
+    implementation 'com.fasterxml.jackson.core:jackson-annotations'
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+}

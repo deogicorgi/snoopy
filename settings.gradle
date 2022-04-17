@@ -1,0 +1,4 @@
+rootProject.name = 'snoopy'
+include 'snoopy-web'
+include 'snoopy-core'
+
