@@ -1,4 +1,4 @@
-package com.github.deogicorgi.core.domain.model;
+package com.github.deogicorgi.snoopy.core.domain.model;
 
 public class AbstractMember {
     protected Long id;
