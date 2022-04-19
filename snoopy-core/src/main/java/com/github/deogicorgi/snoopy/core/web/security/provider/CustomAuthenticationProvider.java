@@ -1,9 +1,7 @@
-package com.github.deogicorgi.snoopy.web.domain.security.authentication;
+package com.github.deogicorgi.snoopy.core.web.security.provider;
 
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.authentication.AuthenticationProvider;
-import org.springframework.security.authentication.BadCredentialsException;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.authentication.*;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -15,12 +13,12 @@ import org.springframework.util.ObjectUtils;
 import java.util.ArrayList;
 
 @Slf4j
-public class SnoopyAuthenticationProvider implements AuthenticationProvider {
+public class CustomAuthenticationProvider implements AuthenticationProvider {
 
     private final UserDetailsService userDetailsService;
     private final PasswordEncoder passwordEncoder;
 
-    public SnoopyAuthenticationProvider(UserDetailsService userDetailsService, PasswordEncoder passwordEncoder) {
+    public CustomAuthenticationProvider(UserDetailsService userDetailsService, PasswordEncoder passwordEncoder) {
         this.userDetailsService = userDetailsService;
         this.passwordEncoder = passwordEncoder;
     }
@@ -40,6 +38,21 @@ public class SnoopyAuthenticationProvider implements AuthenticationProvider {
             throw new BadCredentialsException("password is not matched");
         }
 
+        if (!member.isEnabled()) {
+            throw new DisabledException("this account is disabled.");
+        }
+
+        if (!member.isAccountNonExpired()) {
+            throw new AccountExpiredException("this account is expired.");
+        }
+
+        if (!member.isCredentialsNonExpired()) {
+            throw new CredentialsExpiredException("this credential has expired.");
+        }
+
+        if(!member.isAccountNonLocked()) {
+            throw new LockedException("this account is locked.");
+        }
 
         log.info("name : {}, password : {}", username, password);
         return new UsernamePasswordAuthenticationToken(username, password, new ArrayList<>());
@@ -49,4 +62,5 @@ public class SnoopyAuthenticationProvider implements AuthenticationProvider {
     public boolean supports(Class<?> authentication) {
         return authentication.equals(UsernamePasswordAuthenticationToken.class);
     }
+
 }

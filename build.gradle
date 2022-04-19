@@ -59,6 +59,11 @@ subprojects {
 project(':snoopy-web') {
     dependencies {
         implementation project(':snoopy-core')
+    }
+}
+
+project(':snoopy-core') {
+    dependencies {
         implementation project(':snoopy-orm')
     }
 }
