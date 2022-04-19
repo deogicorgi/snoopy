@@ -1,5 +1,6 @@
 package com.github.deogicorgi.snoopy.web.config;
 
+import com.github.deogicorgi.snoopy.web.domain.member.service.MemberService;
 import com.github.deogicorgi.snoopy.web.domain.security.authentication.SnoopyAuthenticationProvider;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
@@ -10,6 +11,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @Configuration
@@ -23,7 +25,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Override
-    protected void configure(AuthenticationManagerBuilder auth) {
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.authenticationProvider(snoopyAuthenticationProvider());
     }
 
@@ -39,7 +41,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 // 로그인하는 경우에 대해 설정함
                 .formLogin()
                 // 로그인 페이지를 제공하는 URL을 설정함
-                .loginPage("/app/login")
+                .loginPage("/login").loginProcessingUrl("/login").defaultSuccessUrl("/main")
+
+                .and().logout().logoutUrl("/logout")
                 // 로그인 성공 URL을 설정함
 //                .successForwardUrl("/index")
                 // 로그인 실패 URL을 설정함
@@ -50,12 +54,17 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Bean
+    public AuthenticationProvider snoopyAuthenticationProvider() {
+        return new SnoopyAuthenticationProvider(snoopyUserDetailService(), bCryptPasswordEncoder());
+    }
+
+    @Bean
     public BCryptPasswordEncoder bCryptPasswordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
     @Bean
-    public AuthenticationProvider snoopyAuthenticationProvider() {
-        return new SnoopyAuthenticationProvider();
+    public UserDetailsService snoopyUserDetailService() {
+        return new MemberService();
     }
 }

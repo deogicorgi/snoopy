@@ -14,11 +14,11 @@ public class AppController {
 
     @GetMapping("/")
     public String index() {
-        return "redirect:/app/login";
+        return "redirect:/login";
     }
 
-    @GetMapping("/app/login")
-    public ModelAndView login(ModelAndView mav) {
+    @GetMapping("/login")
+    public ModelAndView toLogin(ModelAndView mav) {
         mav.setViewName("app/login");
         mav.addObject("title", environment.getProperty("application.title"));
         return mav;
