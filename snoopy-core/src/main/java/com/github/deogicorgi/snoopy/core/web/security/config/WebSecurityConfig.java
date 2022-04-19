@@ -1,7 +1,7 @@
-package com.github.deogicorgi.snoopy.web.config;
+package com.github.deogicorgi.snoopy.core.web.security.config;
 
-import com.github.deogicorgi.snoopy.web.domain.member.service.MemberService;
-import com.github.deogicorgi.snoopy.web.domain.security.authentication.SnoopyAuthenticationProvider;
+import com.github.deogicorgi.snoopy.core.web.security.provider.CustomAuthenticationProvider;
+import com.github.deogicorgi.snoopy.core.web.security.service.SnoopyMemberService;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -55,7 +55,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Bean
     public AuthenticationProvider snoopyAuthenticationProvider() {
-        return new SnoopyAuthenticationProvider(snoopyUserDetailService(), bCryptPasswordEncoder());
+        return new CustomAuthenticationProvider(snoopyUserDetailService(), bCryptPasswordEncoder());
     }
 
     @Bean
@@ -65,6 +65,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Bean
     public UserDetailsService snoopyUserDetailService() {
-        return new MemberService();
+        return new SnoopyMemberService();
     }
 }

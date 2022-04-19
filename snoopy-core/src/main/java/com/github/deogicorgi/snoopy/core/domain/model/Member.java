@@ -1,6 +1,5 @@
-package com.github.deogicorgi.snoopy.web.domain.member.model;
+package com.github.deogicorgi.snoopy.core.domain.model;
 
-import com.github.deogicorgi.snoopy.core.domain.model.AbstractMember;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
