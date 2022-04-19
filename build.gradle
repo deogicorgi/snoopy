@@ -35,13 +35,16 @@ subprojects {
 
     dependencyManagement {
         dependencies {
-            dependencySet(group : 'org.springframework.boot', version : springBootVersion) {
+            dependencySet(group: 'org.springframework.boot', version: springBootVersion) {
                 entry 'spring-boot'
                 entry 'spring-boot-test'
                 entry 'spring-boot-starter'
                 entry 'spring-boot-starter-security'
                 entry 'spring-boot-starter-test'
                 entry 'spring-boot-test-autoconfigure'
+                entry 'spring-boot-starter-data-jpa'
+                entry 'spring-boot-starter-thymeleaf'
+                entry 'spring-boot-starter-web'
             }
         }
     }
@@ -56,5 +59,6 @@ subprojects {
 project(':snoopy-web') {
     dependencies {
         implementation project(':snoopy-core')
+        implementation project(':snoopy-orm')
     }
 }
