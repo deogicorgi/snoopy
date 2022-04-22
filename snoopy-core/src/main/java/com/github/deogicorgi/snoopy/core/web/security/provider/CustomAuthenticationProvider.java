@@ -1,5 +1,6 @@
 package com.github.deogicorgi.snoopy.core.web.security.provider;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.*;
 import org.springframework.security.core.Authentication;
@@ -8,20 +9,18 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Component;
 import org.springframework.util.ObjectUtils;
 
 import java.util.ArrayList;
 
 @Slf4j
+@Component
+@RequiredArgsConstructor
 public class CustomAuthenticationProvider implements AuthenticationProvider {
 
     private final UserDetailsService userDetailsService;
     private final PasswordEncoder passwordEncoder;
-
-    public CustomAuthenticationProvider(UserDetailsService userDetailsService, PasswordEncoder passwordEncoder) {
-        this.userDetailsService = userDetailsService;
-        this.passwordEncoder = passwordEncoder;
-    }
 
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
@@ -50,7 +49,7 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
             throw new CredentialsExpiredException("this credential has expired.");
         }
 
-        if(!member.isAccountNonLocked()) {
+        if (!member.isAccountNonLocked()) {
             throw new LockedException("this account is locked.");
         }
 

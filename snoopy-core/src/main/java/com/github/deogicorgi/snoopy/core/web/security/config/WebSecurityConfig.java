@@ -1,8 +1,9 @@
 package com.github.deogicorgi.snoopy.core.web.security.config;
 
 import com.github.deogicorgi.snoopy.core.web.security.provider.CustomAuthenticationProvider;
-import com.github.deogicorgi.snoopy.core.web.security.service.SnoopyMemberService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationProvider;
@@ -11,12 +12,14 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @Configuration
 @EnableWebSecurity
+@RequiredArgsConstructor
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+
+    private final ApplicationContext context;
 
 
     @Override
@@ -26,7 +29,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) {
-        auth.authenticationProvider(snoopyAuthenticationProvider());
+        auth.authenticationProvider(context.getBean(CustomAuthenticationProvider.class));
     }
 
     @Override
@@ -54,8 +57,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Bean
-    public AuthenticationProvider snoopyAuthenticationProvider() {
-        return new CustomAuthenticationProvider(snoopyUserDetailService(), bCryptPasswordEncoder());
+    public AuthenticationProvider authenticationProvider(CustomAuthenticationProvider authenticationProvider) {
+        return authenticationProvider;
     }
 
     @Bean
@@ -63,8 +66,4 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         return new BCryptPasswordEncoder();
     }
 
-    @Bean
-    public UserDetailsService snoopyUserDetailService() {
-        return new SnoopyMemberService();
-    }
 }

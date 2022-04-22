@@ -5,7 +5,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication (
         scanBasePackages = {
-                "com.github.deogicorgi.snoopy.orm",
                 "com.github.deogicorgi.snoopy.core",
                 "com.github.deogicorgi.snoopy.web"
         }
