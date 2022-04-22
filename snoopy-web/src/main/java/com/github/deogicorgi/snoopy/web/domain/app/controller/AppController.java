@@ -1,6 +1,5 @@
 package com.github.deogicorgi.snoopy.web.domain.app.controller;
 
-import com.github.deogicorgi.snoopy.core.web.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Controller;
