@@ -62,8 +62,3 @@ project(':snoopy-web') {
     }
 }
 
-project(':snoopy-core') {
-    dependencies {
-        implementation project(':snoopy-orm')
-    }
-}
