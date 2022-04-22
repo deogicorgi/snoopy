@@ -18,16 +18,24 @@ public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     private String username;
+
     private String password;
+
     private String email;
+
     private String description;
+
     private Boolean isAccountLocked;
+
     private Boolean isAccountExpired;
+
     private Boolean isCredentialLocked;
+
     private Boolean isEnabled;
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.EAGER)
     private Role role;
 
     @Override
