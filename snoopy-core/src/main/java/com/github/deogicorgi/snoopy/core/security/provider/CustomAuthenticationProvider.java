@@ -1,12 +1,12 @@
-package com.github.deogicorgi.snoopy.core.web.security.provider;
+package com.github.deogicorgi.snoopy.core.security.provider;
 
+import com.github.deogicorgi.snoopy.core.orm.service.UserPersistService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.*;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
@@ -19,7 +19,7 @@ import java.util.ArrayList;
 @RequiredArgsConstructor
 public class CustomAuthenticationProvider implements AuthenticationProvider {
 
-    private final UserDetailsService userDetailsService;
+    private final UserPersistService userPersistService;
     private final PasswordEncoder passwordEncoder;
 
     @Override
@@ -27,10 +27,14 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
         String username = authentication.getName();
         String password = authentication.getCredentials().toString();
 
-        UserDetails user = userDetailsService.loadUserByUsername(username);
+        UserDetails user = userPersistService.findByUsername(username);
 
         if (ObjectUtils.isEmpty(user)) {
-            throw new UsernameNotFoundException("username or email not found :" + username);
+            user = userPersistService.findByEmail(username);
+
+            if (ObjectUtils.isEmpty(user)) {
+                throw new UsernameNotFoundException("username not found :" + username);
+            }
         }
 
         if (!this.passwordEncoder.matches(password, user.getPassword())) {

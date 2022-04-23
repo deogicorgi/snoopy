@@ -1,5 +1,6 @@
 package com.github.deogicorgi.snoopy.core.orm.entity;
 
+import com.github.deogicorgi.snoopy.core.orm.model.User;
 import lombok.AccessLevel;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -11,32 +12,16 @@ import javax.persistence.*;
 import java.util.Collection;
 import java.util.List;
 
-@Entity
-@EqualsAndHashCode(of = {"id"})
+@Entity(name = "user")
+@EqualsAndHashCode(of = {"id"}, callSuper = false)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class User implements UserDetails {
+public class UserEntity extends User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String username;
-
-    private String password;
-
-    private String email;
-
-    private String description;
-
-    private Boolean isAccountLocked;
-
-    private Boolean isAccountExpired;
-
-    private Boolean isCredentialLocked;
-
-    private Boolean isEnabled;
-
     @OneToOne(fetch = FetchType.EAGER)
-    private Role role;
+    private RoleEntity role;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

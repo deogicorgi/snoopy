@@ -1,6 +1,6 @@
-package com.github.deogicorgi.snoopy.core.web.security.config;
+package com.github.deogicorgi.snoopy.core.security.config;
 
-import com.github.deogicorgi.snoopy.core.web.security.provider.CustomAuthenticationProvider;
+import com.github.deogicorgi.snoopy.core.security.provider.CustomAuthenticationProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.ApplicationContext;
