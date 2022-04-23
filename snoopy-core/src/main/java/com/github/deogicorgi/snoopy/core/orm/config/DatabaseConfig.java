@@ -1,4 +1,4 @@
-package com.github.deogicorgi.snoopy.core.config;
+package com.github.deogicorgi.snoopy.core.orm.config;
 
 import com.zaxxer.hikari.HikariDataSource;
 import org.springframework.boot.autoconfigure.domain.EntityScan;

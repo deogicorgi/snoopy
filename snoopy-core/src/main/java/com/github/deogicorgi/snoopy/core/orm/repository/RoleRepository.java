@@ -1,7 +1,7 @@
 package com.github.deogicorgi.snoopy.core.orm.repository;
 
-import com.github.deogicorgi.snoopy.core.orm.entity.Role;
+import com.github.deogicorgi.snoopy.core.orm.entity.RoleEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface RoleRepository extends JpaRepository<Role, Long> {
+public interface RoleRepository extends JpaRepository<RoleEntity, Long> {
 }

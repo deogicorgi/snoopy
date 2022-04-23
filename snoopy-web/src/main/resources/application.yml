@@ -9,17 +9,20 @@ datasource:
   maximum-pool-size : 30
 
 spring:
+  sql:
+    init:
+      mode: always
   jpa:
+    show-sql: true
     hibernate:
-      ddl-auto: update
+      ddl-auto: create
 #      naming:
 #        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+    defer-datasource-initialization: true
     properties:
       hibernate:
         format_sql: ture
-        show_sql: true
 
-#
 #logging:
 #  level:
 #    org.hibernate.SQL: debug
