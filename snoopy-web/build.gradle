@@ -3,6 +3,7 @@ version = '0.0.1'
 
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+    implementation 'commons-validator:commons-validator:1.7'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
 

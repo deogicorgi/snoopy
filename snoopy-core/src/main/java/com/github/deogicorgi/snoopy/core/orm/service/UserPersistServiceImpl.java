@@ -14,6 +14,11 @@ public class UserPersistServiceImpl implements UserPersistService {
     private final UserRepository userRepository;
 
     @Override
+    public UserEntity findById(Long id) {
+        return userRepository.findById(id).orElse(null);
+    }
+
+    @Override
     public UserEntity findByUsername(String username) {
         return userRepository.findByUsername(username);
     }
@@ -21,6 +26,11 @@ public class UserPersistServiceImpl implements UserPersistService {
     @Override
     public UserEntity findByEmail(String email) {
         return userRepository.findByEmail(email);
+    }
+
+    @Override
+    public UserEntity findByUsernameOrEmail(String username) {
+        return userRepository.findByUsernameOrEmail(username);
     }
 
     @Override

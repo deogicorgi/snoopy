@@ -1,6 +1,6 @@
 package com.github.deogicorgi.snoopy.core.orm.entity;
 
-import com.github.deogicorgi.snoopy.core.orm.model.Privilege;
+import com.github.deogicorgi.snoopy.core.model.Privilege;
 import lombok.AccessLevel;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;

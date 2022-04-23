@@ -1,12 +1,15 @@
 package com.github.deogicorgi.snoopy.core.orm.entity;
 
-import com.github.deogicorgi.snoopy.core.orm.model.User;
+import com.github.deogicorgi.snoopy.core.model.User;
+import com.github.deogicorgi.snoopy.core.web.model.UserRequest;
 import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.util.ObjectUtils;
 
 import javax.persistence.*;
 import java.util.Collection;
@@ -15,6 +18,7 @@ import java.util.List;
 @Entity(name = "user")
 @EqualsAndHashCode(of = {"id"}, callSuper = false)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor
 public class UserEntity extends User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -50,26 +54,6 @@ public class UserEntity extends User implements UserDetails {
         return this.password;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
 
     @Override
     public boolean isAccountNonExpired() {
@@ -91,22 +75,15 @@ public class UserEntity extends User implements UserDetails {
         return isEnabled;
     }
 
-
-    public void setAccountLocked(Boolean accountLocked) {
-        isAccountLocked = accountLocked;
+    public UserEntity(UserRequest request) {
+        this.username = request.getUsername();
+        this.email = request.getEmail();
+        this.description = request.getDescription();
+        this.password = request.getPassword();
+        this.isAccountExpired = ObjectUtils.isEmpty(request.getIsAccountExpired()) || request.getIsAccountExpired();
+        this.isAccountLocked = ObjectUtils.isEmpty(request.getIsAccountLocked()) || request.getIsAccountLocked();
+        this.isCredentialLocked = ObjectUtils.isEmpty(request.getIsCredentialLocked()) || request.getIsCredentialLocked();
+        this.isEnabled = ObjectUtils.isEmpty(request.getIsEnabled()) || request.getIsEnabled();
     }
-
-    public void setAccountExpired(Boolean accountExpired) {
-        isAccountExpired = accountExpired;
-    }
-
-    public void setCredentialLocked(Boolean credentialLocked) {
-        isCredentialLocked = credentialLocked;
-    }
-
-    public void setEnabled(Boolean enabled) {
-        isEnabled = enabled;
-    }
-
 
 }

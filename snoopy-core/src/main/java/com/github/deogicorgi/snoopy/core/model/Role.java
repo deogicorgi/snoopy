@@ -1,4 +1,4 @@
-package com.github.deogicorgi.snoopy.core.orm.model;
+package com.github.deogicorgi.snoopy.core.model;
 
 import javax.persistence.Column;
 import javax.persistence.MappedSuperclass;
