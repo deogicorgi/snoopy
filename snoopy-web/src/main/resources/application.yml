@@ -1,14 +1,19 @@
 app:
   title : Snoopy stress test application
   version : 1.0.0
-
-datasource:
-  url: jdbc:mariadb://deogicorgi.home:3306/snoopy
-  username: deogicorgi
-  password: 8813
-  maximum-pool-size : 30
-
 spring:
+  datasource:
+    url: jdbc:mariadb://deogicorgi.home:3306/snoopy
+    username: deogicorgi
+    password: 8813
+    hikari:
+      maximum-pool-size : 30
+      connection-timeout: 5000
+      connection-init-sql: SELECT 1
+      validation-timeout: 2000
+      minimum-idle: 10
+      idle-timeout: 600000
+      max-lifetime: 1800000
   sql:
     init:
       mode: always
@@ -26,3 +31,6 @@ spring:
 #logging:
 #  level:
 #    org.hibernate.SQL: debug
+#    com:
+#      zaxxer:
+#        hikari: debug
