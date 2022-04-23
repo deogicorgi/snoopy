@@ -5,6 +5,10 @@ import com.github.deogicorgi.snoopy.core.orm.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.ObjectUtils;
+
+import java.util.Optional;
 
 @Slf4j
 @Service
@@ -41,5 +45,45 @@ public class UserPersistServiceImpl implements UserPersistService {
     @Override
     public UserEntity save(UserEntity userEntity) {
         return userRepository.save(userEntity);
+    }
+
+    @Override
+    @Transactional
+    public UserEntity update(UserEntity userEntity) {
+
+        Optional<UserEntity> optional = userRepository.findById(userEntity.getId());
+
+        if (optional.isPresent()) {
+            UserEntity originEntity = optional.get();
+
+            if (!ObjectUtils.isEmpty(userEntity.getDescription())) {
+                originEntity.setDescription(userEntity.getDescription());
+            }
+
+            if (!ObjectUtils.isEmpty(userEntity.getIsAccountExpired())) {
+                originEntity.setIsAccountExpired(userEntity.getIsAccountExpired());
+            }
+
+            if (!ObjectUtils.isEmpty(userEntity.getIsAccountLocked())) {
+                originEntity.setIsAccountLocked(userEntity.getIsAccountLocked());
+            }
+
+            if (!ObjectUtils.isEmpty(userEntity.getIsCredentialLocked())) {
+                originEntity.setIsCredentialLocked(userEntity.getIsCredentialLocked());
+            }
+
+            if (!ObjectUtils.isEmpty(userEntity.getIsEnabled())) {
+                originEntity.setIsEnabled(userEntity.getIsEnabled());
+            }
+
+            return originEntity;
+        }
+
+        return null;
+    }
+
+    @Override
+    public void delete(Long id) {
+        userRepository.delete(userRepository.findById(id).orElseThrow(() -> new RuntimeException("")));
     }
 }

@@ -76,6 +76,7 @@ public class UserEntity extends User implements UserDetails {
     }
 
     public UserEntity(UserRequest request) {
+        this.id = request.getId();
         this.username = request.getUsername();
         this.email = request.getEmail();
         this.description = request.getDescription();

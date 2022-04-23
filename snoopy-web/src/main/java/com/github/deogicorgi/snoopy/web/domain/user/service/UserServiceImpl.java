@@ -58,10 +58,36 @@ public class UserServiceImpl implements UserService {
         return userResponse;
     }
 
+    @Override
+    public UserResponse update(UserRequest user) {
+
+        validate(user);
+
+        UserEntity entity = userPersistService.update(new UserEntity(user));
+
+        if (ObjectUtils.isEmpty(entity)) {
+            // TODO NotfoundException
+        }
+
+        UserResponse userResponse = new UserResponse();
+        BeanUtils.copyProperties(entity, userResponse);
+        return userResponse;
+    }
+
+    @Override
+    public void deleteById(Long id) {
+        userPersistService.delete(id);
+    }
+
     /**********************************************************
      ************************ validate ************************
      **********************************************************/
 
+    /**
+     * Validate the User body data.
+     *
+     * @param user requested user body
+     */
     private void validate(UserRequest user) {
 
         if (ObjectUtils.isEmpty(user.getUsername())) {
