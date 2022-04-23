@@ -1,6 +1,6 @@
 package com.github.deogicorgi.snoopy.core.orm.entity;
 
-import com.github.deogicorgi.snoopy.core.model.User;
+import com.github.deogicorgi.snoopy.core.model.AbstractUser;
 import com.github.deogicorgi.snoopy.core.web.model.UserRequest;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -16,13 +16,10 @@ import java.util.Collection;
 import java.util.List;
 
 @Entity(name = "user")
-@EqualsAndHashCode(of = {"id"}, callSuper = false)
+@EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
-public class UserEntity extends User implements UserDetails {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class UserEntity extends AbstractUser implements UserDetails {
 
     @OneToOne(fetch = FetchType.EAGER)
     private RoleEntity role;
@@ -33,7 +30,7 @@ public class UserEntity extends User implements UserDetails {
     }
 
     public Long getId() {
-        return id;
+        return this.id;
     }
 
     public void setId(Long id) {

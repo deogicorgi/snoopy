@@ -1,20 +1,18 @@
 package com.github.deogicorgi.snoopy.core.orm.entity;
 
-import com.github.deogicorgi.snoopy.core.model.Role;
+import com.github.deogicorgi.snoopy.core.model.AbstractRole;
 import lombok.AccessLevel;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.OneToMany;
 import java.util.Set;
 
 @Entity(name = "role")
-@EqualsAndHashCode(of = {"id"}, callSuper = false)
+@EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class RoleEntity extends Role {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class RoleEntity extends AbstractRole {
 
     @OneToMany
     private Set<PrivilegeEntity> privileges;

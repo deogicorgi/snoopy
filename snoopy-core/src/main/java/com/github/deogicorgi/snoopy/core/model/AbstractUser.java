@@ -1,17 +1,22 @@
 package com.github.deogicorgi.snoopy.core.model;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
-import javax.persistence.Column;
-import javax.persistence.MappedSuperclass;
+import javax.persistence.*;
 
 @Getter
 @Setter
-@MappedSuperclass
 @ToString
-public abstract class User {
+@EqualsAndHashCode(of = "id")
+@MappedSuperclass
+public abstract class AbstractUser {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    protected Long id;
 
     @Column(unique = true, length = 50)
     protected String username;
