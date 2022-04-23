@@ -18,6 +18,8 @@ public class Role {
     @Column(unique = true, length = 50)
     private String name;
 
+    private String description;
+
     private Boolean isEnabled;
 
     @OneToMany

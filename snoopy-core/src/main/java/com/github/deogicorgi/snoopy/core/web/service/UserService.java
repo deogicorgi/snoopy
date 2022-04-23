@@ -5,6 +5,10 @@ import com.github.deogicorgi.snoopy.core.orm.entity.User;
 public interface UserService {
 
     User findByUsername(String username);
+
+    User findByEmail(String email);
+
     User findByUsernameAndPassword(String username, String password);
+
     User save(User user);
 }

@@ -16,4 +16,6 @@ public class Privilege {
 
     @Column(unique = true, length = 50)
     private String name;
+
+    private String description;
 }

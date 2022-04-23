@@ -27,29 +27,29 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
         String username = authentication.getName();
         String password = authentication.getCredentials().toString();
 
-        UserDetails member = userDetailsService.loadUserByUsername(username);
+        UserDetails user = userDetailsService.loadUserByUsername(username);
 
-        if (ObjectUtils.isEmpty(member)) {
-            throw new UsernameNotFoundException("username not found :" + username);
+        if (ObjectUtils.isEmpty(user)) {
+            throw new UsernameNotFoundException("username or email not found :" + username);
         }
 
-        if (!this.passwordEncoder.matches(password, member.getPassword())) {
+        if (!this.passwordEncoder.matches(password, user.getPassword())) {
             throw new BadCredentialsException("password is not matched");
         }
 
-        if (!member.isEnabled()) {
+        if (!user.isEnabled()) {
             throw new DisabledException("this account is disabled.");
         }
 
-        if (!member.isAccountNonExpired()) {
+        if (!user.isAccountNonExpired()) {
             throw new AccountExpiredException("this account is expired.");
         }
 
-        if (!member.isCredentialsNonExpired()) {
+        if (!user.isCredentialsNonExpired()) {
             throw new CredentialsExpiredException("this credential has expired.");
         }
 
-        if (!member.isAccountNonLocked()) {
+        if (!user.isAccountNonLocked()) {
             throw new LockedException("this account is locked.");
         }
 
