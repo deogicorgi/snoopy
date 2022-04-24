@@ -6,5 +6,5 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class RoleRequest extends AbstractRole {
+public class RoleResponse extends AbstractRole {
 }
