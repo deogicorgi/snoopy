@@ -28,6 +28,21 @@ public class RoleServiceImpl implements RoleService {
         return null;
     }
 
+    @Override
+    public RoleResponse update(RoleRequest role) {
+        return null;
+    }
+
+    @Override
+    public RoleResponse findById(Long id) {
+        return null;
+    }
+
+    @Override
+    public void deleteById(Long id) {
+
+    }
+
     /**********************************************************
      ************************ validate ************************
      **********************************************************/

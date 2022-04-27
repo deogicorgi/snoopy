@@ -16,4 +16,27 @@ public interface RoleService {
      * @return RoleResponse Saved role data.
      */
     RoleResponse save(RoleRequest role);
+
+    /**
+     * Converts the requested user data to an entity and forwards it to the persistence layer.
+     *
+     * @param role Role request body
+     * @return RoleResponse Updated role data.
+     */
+    RoleResponse update(RoleRequest role);
+
+    /**
+     * Retrieves single Role data via id.
+     *
+     * @param id roleId
+     * @return RoleResponse Retrieved role data.
+     */
+    RoleResponse findById(Long id);
+
+    /**
+     * Delete single User data via id.
+     *
+     * @param id userId
+     */
+    void deleteById(Long id);
 }
