@@ -1,5 +1,6 @@
 package com.github.deogicorgi.snoopy.web.domain.role.service;
 
+import com.github.deogicorgi.snoopy.core.orm.entity.RoleEntity;
 import com.github.deogicorgi.snoopy.core.orm.service.RolePersistService;
 import com.github.deogicorgi.snoopy.core.web.model.RoleRequest;
 import com.github.deogicorgi.snoopy.core.web.model.RoleResponse;
@@ -18,8 +19,8 @@ public class RoleServiceImpl implements RoleService {
     @Override
     public RoleResponse save(RoleRequest role) {
 
-//        validate(user);
-//
+        validate(role);
+
 //        user.setPassword(passwordEncoder.encode(user.getPassword()));
 //        UserEntity savedEntity = userPersistService.save(new UserEntity(user));
 //        UserResponse userResponse = new UserResponse();
