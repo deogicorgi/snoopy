@@ -21,6 +21,9 @@ public class RoleServiceImpl implements RoleService {
 
         validate(role);
 
+//        RoleEntity roleEntity = new RoleEntity();
+
+
 //        user.setPassword(passwordEncoder.encode(user.getPassword()));
 //        UserEntity savedEntity = userPersistService.save(new UserEntity(user));
 //        UserResponse userResponse = new UserResponse();

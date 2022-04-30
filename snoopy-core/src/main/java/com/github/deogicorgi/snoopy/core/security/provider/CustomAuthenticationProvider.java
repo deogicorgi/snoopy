@@ -1,6 +1,6 @@
 package com.github.deogicorgi.snoopy.core.security.provider;
 
-import com.github.deogicorgi.snoopy.core.orm.service.UserPersistService;
+import com.github.deogicorgi.snoopy.core.security.service.UserSecurityService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.*;
@@ -19,7 +19,7 @@ import java.util.ArrayList;
 @RequiredArgsConstructor
 public class CustomAuthenticationProvider implements AuthenticationProvider {
 
-    private final UserPersistService userPersistService;
+    private final UserSecurityService userSecurityService;
     private final PasswordEncoder passwordEncoder;
 
     @Override
@@ -27,14 +27,10 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
         String username = authentication.getName();
         String password = authentication.getCredentials().toString();
 
-        UserDetails user = userPersistService.findByUsername(username);
+        UserDetails user = userSecurityService.getUserByPrincipal(username);
 
         if (ObjectUtils.isEmpty(user)) {
-            user = userPersistService.findByEmail(username);
-
-            if (ObjectUtils.isEmpty(user)) {
-                throw new UsernameNotFoundException("username not found :" + username);
-            }
+            throw new UsernameNotFoundException("username not found :" + username);
         }
 
         if (!this.passwordEncoder.matches(password, user.getPassword())) {

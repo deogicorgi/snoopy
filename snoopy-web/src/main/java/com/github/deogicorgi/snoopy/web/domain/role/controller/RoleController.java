@@ -21,7 +21,6 @@ public class RoleController {
     private final RoleService roleService;
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-
     public ResponseEntity<ApiResponse> save(@RequestBody RoleRequest role) {
         return ApiResponseBuilder.build(new JsonApiResponse(HttpStatus.CREATED, roleService.save(role)));
     }

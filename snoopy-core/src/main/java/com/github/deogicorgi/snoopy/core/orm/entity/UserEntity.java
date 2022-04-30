@@ -1,87 +1,73 @@
 package com.github.deogicorgi.snoopy.core.orm.entity;
 
-import com.github.deogicorgi.snoopy.core.model.AbstractUser;
-import com.github.deogicorgi.snoopy.core.web.model.UserRequest;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.util.ObjectUtils;
+import com.github.deogicorgi.snoopy.core.model.Builder;
+import com.github.deogicorgi.snoopy.core.model.User;
+import lombok.*;
 
 import javax.persistence.*;
-import java.util.Collection;
-import java.util.List;
 
+@Getter
+@Setter
 @Entity(name = "user")
-@EqualsAndHashCode(callSuper = true)
+@EqualsAndHashCode(of = "id")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
-public class UserEntity extends AbstractUser implements UserDetails {
+public class UserEntity {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column(unique = true, length = 50)
+    private String username;
+
+    @Column(length = 100)
+    private String password;
+
+    @Column(unique = true, length = 100)
+    private String email;
+
+    private String description;
 
     @OneToOne(fetch = FetchType.EAGER)
     private RoleEntity role;
 
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(new SimpleGrantedAuthority("USER"));
+    @OneToOne(fetch = FetchType.EAGER, mappedBy = "userId")
+    private UserStatusEntity userStatus;
+
+    private UserEntity(UserEntity.UserEntityBuilder builder) {
+        this.id = builder.id;
+        this.username = builder.username;
+        this.password = builder.password;
+        this.email = builder.email;
+        this.description = builder.description;
+        this.userStatus = builder.userStatus;
+        this.role = builder.role;
     }
 
-    public Long getId() {
-        return this.id;
-    }
+    public static class UserEntityBuilder implements Builder<UserEntity> {
+        private final Long id;
+        private final String username;
+        private final String password;
+        private final String email;
+        private final String description;
+        private final UserStatusEntity userStatus;
+        private final RoleEntity role;
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+        public UserEntityBuilder(User user) {
+            this.id = user.getId();
+            this.username = user.getUsername();
+            this.password = user.getPassword();
+            this.email = user.getEmail();
+            this.description = user.getDescription();
+            this.userStatus = new UserStatusEntity.UserStatusEntityBuilder(user.getUserStatus()).build();
+            this.role = new RoleEntity.RoleEntityBuilder(user.getRole()).build();
+        }
 
-    @Override
-    public String getUsername() {
-        return this.username;
-    }
-
-    public void setUsername(String userName) {
-        this.username = userName;
-    }
-
-    @Override
-    public String getPassword() {
-        return this.password;
-    }
-
-
-    @Override
-    public boolean isAccountNonExpired() {
-        return !this.isAccountExpired;
-    }
-
-    @Override
-    public boolean isAccountNonLocked() {
-        return !this.isAccountLocked;
-    }
-
-    @Override
-    public boolean isCredentialsNonExpired() {
-        return !this.isCredentialLocked;
-    }
-
-    @Override
-    public boolean isEnabled() {
-        return isEnabled;
-    }
-
-    public UserEntity(UserRequest request) {
-        this.id = request.getId();
-        this.username = request.getUsername();
-        this.email = request.getEmail();
-        this.description = request.getDescription();
-        this.password = request.getPassword();
-        this.isAccountExpired = ObjectUtils.isEmpty(request.getIsAccountExpired()) || request.getIsAccountExpired();
-        this.isAccountLocked = ObjectUtils.isEmpty(request.getIsAccountLocked()) || request.getIsAccountLocked();
-        this.isCredentialLocked = ObjectUtils.isEmpty(request.getIsCredentialLocked()) || request.getIsCredentialLocked();
-        this.isEnabled = ObjectUtils.isEmpty(request.getIsEnabled()) || request.getIsEnabled();
+        @Override
+        public UserEntity build() {
+            return new UserEntity(this);
+        }
     }
 
 }

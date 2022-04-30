@@ -60,21 +60,21 @@ public class UserPersistServiceImpl implements UserPersistService {
                 originEntity.setDescription(userEntity.getDescription());
             }
 
-            if (!ObjectUtils.isEmpty(userEntity.getIsAccountExpired())) {
-                originEntity.setIsAccountExpired(userEntity.getIsAccountExpired());
-            }
-
-            if (!ObjectUtils.isEmpty(userEntity.getIsAccountLocked())) {
-                originEntity.setIsAccountLocked(userEntity.getIsAccountLocked());
-            }
-
-            if (!ObjectUtils.isEmpty(userEntity.getIsCredentialLocked())) {
-                originEntity.setIsCredentialLocked(userEntity.getIsCredentialLocked());
-            }
-
-            if (!ObjectUtils.isEmpty(userEntity.getIsEnabled())) {
-                originEntity.setIsEnabled(userEntity.getIsEnabled());
-            }
+//            if (!ObjectUtils.isEmpty(userEntity.getIsAccountExpired())) {
+//                originEntity.setIsAccountExpired(userEntity.getIsAccountExpired());
+//            }
+//
+//            if (!ObjectUtils.isEmpty(userEntity.getIsAccountLocked())) {
+//                originEntity.setIsAccountLocked(userEntity.getIsAccountLocked());
+//            }
+//
+//            if (!ObjectUtils.isEmpty(userEntity.getIsCredentialLocked())) {
+//                originEntity.setIsCredentialLocked(userEntity.getIsCredentialLocked());
+//            }
+//
+//            if (!ObjectUtils.isEmpty(userEntity.getIsEnabled())) {
+//                originEntity.setIsEnabled(userEntity.getIsEnabled());
+//            }
 
             return originEntity;
         }
