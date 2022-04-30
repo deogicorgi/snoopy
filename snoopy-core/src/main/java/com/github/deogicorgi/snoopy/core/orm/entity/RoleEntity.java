@@ -19,6 +19,7 @@ public class RoleEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "role_id")
     private Long id;
 
     @Column(unique = true, length = 50)
@@ -29,7 +30,10 @@ public class RoleEntity {
 
     private Boolean isEnabled = false;
 
-    @OneToMany
+    @ManyToMany
+    @JoinTable(name = "role_privilege",
+            joinColumns = @JoinColumn(name="role_id"),
+            inverseJoinColumns = @JoinColumn(name="privilege_id"))
     private Set<PrivilegeEntity> privileges;
 
     private RoleEntity(RoleEntity.RoleEntityBuilder builder) {
