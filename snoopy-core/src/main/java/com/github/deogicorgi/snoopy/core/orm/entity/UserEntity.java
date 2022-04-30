@@ -35,7 +35,7 @@ public class UserEntity {
     private RoleEntity role;
 
     @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "userId")
+    @JoinColumn(name = "statusId")
     private UserStatusEntity userStatus;
 
     private UserEntity(UserEntity.UserEntityBuilder builder) {
