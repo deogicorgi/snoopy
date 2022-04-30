@@ -1,8 +1,8 @@
 package com.github.deogicorgi.snoopy.web.domain.user.controller;
 
+import com.github.deogicorgi.snoopy.core.model.User;
 import com.github.deogicorgi.snoopy.core.web.model.ApiResponse;
 import com.github.deogicorgi.snoopy.core.web.model.JsonApiResponse;
-import com.github.deogicorgi.snoopy.core.web.model.UserRequest;
 import com.github.deogicorgi.snoopy.core.web.util.ApiResponseBuilder;
 import com.github.deogicorgi.snoopy.web.domain.user.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -22,12 +22,12 @@ public class UserController {
     private final UserService userService;
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<ApiResponse> save(@RequestBody UserRequest user) {
+    public ResponseEntity<ApiResponse> save(@RequestBody User user) {
         return ApiResponseBuilder.build(new JsonApiResponse(HttpStatus.CREATED, userService.save(user)));
     }
 
     @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<ApiResponse> update(@RequestBody UserRequest user) {
+    public ResponseEntity<ApiResponse> update(@RequestBody User user) {
         return ApiResponseBuilder.build(new JsonApiResponse(HttpStatus.OK, userService.update(user)));
     }
 

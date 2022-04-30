@@ -14,13 +14,13 @@ public class UserStatus {
 
     private Long userId;
 
-    private Boolean isAccountLocked;
+    private Boolean isAccountLocked = false;
 
-    private Boolean isAccountExpired;
+    private Boolean isAccountExpired = false;
 
-    private Boolean isCredentialLocked;
+    private Boolean isCredentialLocked = false;
 
-    private Boolean isEnabled;
+    private Boolean isEnabled = true;
 
     public UserStatus() {
     }

@@ -2,16 +2,18 @@ package com.github.deogicorgi.snoopy.core.orm.entity;
 
 import com.github.deogicorgi.snoopy.core.model.Builder;
 import com.github.deogicorgi.snoopy.core.model.User;
-import lombok.*;
+import lombok.AccessLevel;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import org.springframework.util.ObjectUtils;
 
 import javax.persistence.*;
 
 @Getter
-@Setter
 @Entity(name = "user")
 @EqualsAndHashCode(of = "id")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@AllArgsConstructor
 public class UserEntity {
 
     @Id
@@ -32,7 +34,8 @@ public class UserEntity {
     @OneToOne(fetch = FetchType.EAGER)
     private RoleEntity role;
 
-    @OneToOne(fetch = FetchType.EAGER, mappedBy = "userId")
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "userId")
     private UserStatusEntity userStatus;
 
     private UserEntity(UserEntity.UserEntityBuilder builder) {
@@ -60,8 +63,8 @@ public class UserEntity {
             this.password = user.getPassword();
             this.email = user.getEmail();
             this.description = user.getDescription();
-            this.userStatus = new UserStatusEntity.UserStatusEntityBuilder(user.getUserStatus()).build();
-            this.role = new RoleEntity.RoleEntityBuilder(user.getRole()).build();
+            this.userStatus = ObjectUtils.isEmpty(user.getUserStatus()) ? null : new UserStatusEntity.UserStatusEntityBuilder(user.getUserStatus()).build();
+            this.role = ObjectUtils.isEmpty(user.getRole()) ? null : new RoleEntity.RoleEntityBuilder(user.getRole()).build();
         }
 
         @Override

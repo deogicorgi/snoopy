@@ -1,13 +1,13 @@
 package com.github.deogicorgi.snoopy.web.domain.user.service;
 
+import com.github.deogicorgi.snoopy.core.model.Role;
+import com.github.deogicorgi.snoopy.core.model.User;
+import com.github.deogicorgi.snoopy.core.model.UserStatus;
 import com.github.deogicorgi.snoopy.core.orm.entity.UserEntity;
 import com.github.deogicorgi.snoopy.core.orm.service.UserPersistService;
-import com.github.deogicorgi.snoopy.core.web.model.UserRequest;
-import com.github.deogicorgi.snoopy.core.web.model.UserResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.validator.routines.EmailValidator;
-import org.springframework.beans.BeanUtils;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
@@ -21,57 +21,49 @@ public class UserServiceImpl implements UserService {
     private final BCryptPasswordEncoder passwordEncoder;
 
     @Override
-    public UserResponse save(UserRequest user) {
+    public User save(User user) {
 
         validate(user);
-
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        UserEntity savedEntity = userPersistService.save(new UserEntity(user));
-        UserResponse userResponse = new UserResponse();
-        BeanUtils.copyProperties(savedEntity, userResponse);
-        return userResponse;
+        user.setUserStatus(new UserStatus());
+        user.setRole(new Role());
+        UserEntity savedEntity = userPersistService.save(new UserEntity.UserEntityBuilder(user).build());
+        return new User.UserBuilder(savedEntity).build();
     }
 
     @Override
-    public UserResponse findById(Long id) {
+    public User findById(Long id) {
         UserEntity entity = userPersistService.findById(id);
 
         if (ObjectUtils.isEmpty(entity)) {
             // TODO NotfoundException
         }
-
-        UserResponse userResponse = new UserResponse();
-        BeanUtils.copyProperties(entity, userResponse);
-        return userResponse;
+        return new User.UserBuilder(entity).build();
     }
 
     @Override
-    public UserResponse findByUsernameOrEmail(String username) {
+    public User findByUsernameOrEmail(String username) {
         UserEntity entity = userPersistService.findByUsernameOrEmail(username);
 
         if (ObjectUtils.isEmpty(entity)) {
             // TODO NotfoundException
         }
 
-        UserResponse userResponse = new UserResponse();
-        BeanUtils.copyProperties(entity, userResponse);
-        return userResponse;
+        return new User.UserBuilder(entity).build();
     }
 
     @Override
-    public UserResponse update(UserRequest user) {
+    public User update(User user) {
 
         validate(user);
 
-        UserEntity entity = userPersistService.update(new UserEntity(user));
+        UserEntity entity = userPersistService.update(new UserEntity.UserEntityBuilder(user).build());
 
         if (ObjectUtils.isEmpty(entity)) {
             // TODO NotfoundException
         }
 
-        UserResponse userResponse = new UserResponse();
-        BeanUtils.copyProperties(entity, userResponse);
-        return userResponse;
+        return new User.UserBuilder(entity).build();
     }
 
     @Override
@@ -88,7 +80,7 @@ public class UserServiceImpl implements UserService {
      *
      * @param user requested user body
      */
-    private void validate(UserRequest user) {
+    private void validate(User user) {
 
         if (ObjectUtils.isEmpty(user.getUsername())) {
 
