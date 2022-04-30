@@ -12,7 +12,7 @@ import lombok.ToString;
 @EqualsAndHashCode(of = "userId")
 public class UserStatus {
 
-    private Long userId;
+    private Long statusId;
 
     private Boolean isAccountLocked = false;
 
@@ -26,7 +26,7 @@ public class UserStatus {
     }
 
     private UserStatus(UserStatusBuilder builder) {
-        this.userId = builder.userId;
+        this.statusId = builder.statusId;
         this.isAccountLocked = builder.isAccountLocked;
         this.isAccountExpired = builder.isAccountExpired;
         this.isCredentialLocked = builder.isCredentialLocked;
@@ -34,14 +34,14 @@ public class UserStatus {
     }
 
     public static class UserStatusBuilder implements Builder<UserStatus> {
-        private final Long userId;
+        private final Long statusId;
         private final Boolean isAccountLocked;
         private final Boolean isAccountExpired;
         private final Boolean isCredentialLocked;
         private final Boolean isEnabled;
 
         public UserStatusBuilder(UserStatusEntity userStatusEntity) {
-            this.userId = userStatusEntity.getUserId();
+            this.statusId = userStatusEntity.getStatusId();
             this.isAccountLocked = userStatusEntity.getIsAccountLocked();
             this.isAccountExpired = userStatusEntity.getIsAccountExpired();
             this.isCredentialLocked = userStatusEntity.getIsCredentialLocked();

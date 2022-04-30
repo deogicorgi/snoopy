@@ -14,13 +14,13 @@ import javax.persistence.Id;
 
 @Getter
 @Entity(name = "user_status")
-@EqualsAndHashCode(of = "userId")
+@EqualsAndHashCode(of = "statusId")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class UserStatusEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long userId;
+    private Long statusId;
 
     private Boolean isAccountLocked;
 
@@ -31,7 +31,7 @@ public class UserStatusEntity {
     private Boolean isEnabled;
 
     private UserStatusEntity(UserStatusEntity.UserStatusEntityBuilder builder) {
-        this.userId = builder.userId;
+        this.statusId = builder.statusId;
         this.isAccountLocked = builder.isAccountLocked;
         this.isAccountExpired = builder.isAccountExpired;
         this.isCredentialLocked = builder.isCredentialLocked;
@@ -39,14 +39,14 @@ public class UserStatusEntity {
     }
 
     public static class UserStatusEntityBuilder implements Builder<UserStatusEntity> {
-        private final Long userId;
+        private final Long statusId;
         private final Boolean isAccountLocked;
         private final Boolean isAccountExpired;
         private final Boolean isCredentialLocked;
         private final Boolean isEnabled;
 
         public UserStatusEntityBuilder(UserStatus userStatus) {
-            this.userId = userStatus.getUserId();
+            this.statusId = userStatus.getStatusId();
             this.isAccountLocked = userStatus.getIsAccountLocked();
             this.isAccountExpired = userStatus.getIsAccountExpired();
             this.isCredentialLocked = userStatus.getIsCredentialLocked();
