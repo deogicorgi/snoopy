@@ -6,7 +6,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.ObjectUtils;
 
 import java.util.Optional;
 
@@ -56,9 +55,9 @@ public class UserPersistServiceImpl implements UserPersistService {
         if (optional.isPresent()) {
             UserEntity originEntity = optional.get();
 
-            if (!ObjectUtils.isEmpty(userEntity.getDescription())) {
-                originEntity.setDescription(userEntity.getDescription());
-            }
+//            if (!ObjectUtils.isEmpty(userEntity.getDescription())) {
+//                originEntity.setDescription(userEntity.getDescription());
+//            }
 
 //            if (!ObjectUtils.isEmpty(userEntity.getIsAccountExpired())) {
 //                originEntity.setIsAccountExpired(userEntity.getIsAccountExpired());

@@ -2,19 +2,24 @@ package com.github.deogicorgi.snoopy.core.orm.entity;
 
 import com.github.deogicorgi.snoopy.core.model.Builder;
 import com.github.deogicorgi.snoopy.core.model.UserStatus;
-import lombok.*;
+import lombok.AccessLevel;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Getter
 @Entity(name = "user_status")
 @EqualsAndHashCode(of = "userId")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@AllArgsConstructor
 public class UserStatusEntity {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long userId;
 
     private Boolean isAccountLocked;

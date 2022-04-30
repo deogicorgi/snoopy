@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -15,15 +16,15 @@ import java.util.stream.Collectors;
 @EqualsAndHashCode(of = "id")
 public class Role {
 
-    private Long id;
+    private Long id = 3L;
 
     protected String name;
 
     protected String description;
 
-    protected Boolean isEnabled;
+    protected Boolean isEnabled = true;
 
-    private Set<Privilege> privileges;
+    private Set<Privilege> privileges = new HashSet<>();
 
     public Role() {
     }
