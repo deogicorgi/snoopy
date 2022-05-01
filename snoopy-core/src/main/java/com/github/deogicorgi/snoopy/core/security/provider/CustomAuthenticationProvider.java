@@ -12,8 +12,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.util.ObjectUtils;
 
-import java.util.ArrayList;
-
 @Slf4j
 @Component
 @RequiredArgsConstructor
@@ -30,7 +28,7 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
         UserDetails user = userSecurityService.getUserByPrincipal(username);
 
         if (ObjectUtils.isEmpty(user)) {
-            throw new UsernameNotFoundException("username not found :" + username);
+            throw new UsernameNotFoundException("username or email not found :" + username);
         }
 
         if (!this.passwordEncoder.matches(password, user.getPassword())) {
@@ -53,8 +51,9 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
             throw new LockedException("this account is locked.");
         }
 
-        log.info("name : {}, password : {}", username, password);
-        return new UsernamePasswordAuthenticationToken(username, password, new ArrayList<>());
+        log.info("Authentication - username : {}, enabled : {}, account-lock : {}, account-expired : {}, credential-expired : {}",
+                user.getUsername(), user.isEnabled(), !user.isAccountNonLocked(), !user.isAccountNonExpired(), !user.isCredentialsNonExpired());
+        return new UsernamePasswordAuthenticationToken(username, password, user.getAuthorities());
     }
 
     @Override

@@ -7,6 +7,7 @@ import com.github.deogicorgi.snoopy.core.security.model.SecurityUserDetails;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
+import org.springframework.util.ObjectUtils;
 
 @Service
 @RequiredArgsConstructor
@@ -16,7 +17,12 @@ public class UserSecurityServiceImpl implements UserSecurityService {
 
     @Override
     public UserDetails getUserByPrincipal(String username) {
-        UserEntity userEntity = userPersistService.findByUsername(username);
+        UserEntity userEntity = userPersistService.findByUsernameOrEmail(username);
+
+        if (ObjectUtils.isEmpty(userEntity)) {
+            return null;
+        }
+
         return new SecurityUserDetails(new User.UserBuilder(userEntity).build());
     }
 }

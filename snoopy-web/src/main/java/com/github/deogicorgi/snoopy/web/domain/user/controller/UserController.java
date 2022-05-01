@@ -4,7 +4,7 @@ import com.github.deogicorgi.snoopy.core.model.User;
 import com.github.deogicorgi.snoopy.core.web.model.ApiResponse;
 import com.github.deogicorgi.snoopy.core.web.model.JsonApiResponse;
 import com.github.deogicorgi.snoopy.core.web.util.ApiResponseBuilder;
-import com.github.deogicorgi.snoopy.web.domain.user.service.UserService;
+import com.github.deogicorgi.snoopy.core.web.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;

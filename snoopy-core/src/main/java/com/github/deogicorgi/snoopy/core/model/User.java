@@ -22,7 +22,13 @@ public class User {
 
     private String description;
 
-    private UserStatus userStatus;
+    private Boolean isAccountLocked = false;
+
+    private Boolean isAccountExpired = false;
+
+    private Boolean isCredentialLocked = false;
+
+    private Boolean isEnabled = true;
 
     private Role role;
 
@@ -35,7 +41,10 @@ public class User {
         this.password = builder.password;
         this.email = builder.email;
         this.description = builder.description;
-        this.userStatus = builder.userStatus;
+        this.isAccountLocked = builder.isAccountLocked;
+        this.isAccountExpired = builder.isAccountExpired;
+        this.isCredentialLocked = builder.isCredentialLocked;
+        this.isEnabled = builder.isEnabled;
         this.role = builder.role;
     }
 
@@ -45,7 +54,10 @@ public class User {
         private final String password;
         private final String email;
         private final String description;
-        private final UserStatus userStatus;
+        private final Boolean isAccountLocked;
+        private final Boolean isAccountExpired;
+        private final Boolean isCredentialLocked;
+        private final Boolean isEnabled;
         private final Role role;
 
         public UserBuilder(UserEntity userEntity) {
@@ -54,7 +66,10 @@ public class User {
             this.password = userEntity.getPassword();
             this.email = userEntity.getEmail();
             this.description = userEntity.getDescription();
-            this.userStatus = new UserStatus.UserStatusBuilder(userEntity.getUserStatus()).build();
+            this.isAccountLocked = userEntity.getIsAccountLocked();
+            this.isAccountExpired = userEntity.getIsAccountExpired();
+            this.isCredentialLocked = userEntity.getIsCredentialLocked();
+            this.isEnabled = userEntity.getIsEnabled();
             this.role = new Role.RoleBuilder(userEntity.getRole()).build();
         }
 

@@ -1,6 +1,7 @@
 package com.github.deogicorgi.snoopy.core.model;
 
 import com.github.deogicorgi.snoopy.core.orm.entity.RoleEntity;
+import com.github.deogicorgi.snoopy.core.security.model.Authority;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -14,15 +15,15 @@ import java.util.stream.Collectors;
 @Setter
 @ToString
 @EqualsAndHashCode(of = "id")
-public class Role {
+public class Role implements Authority {
 
     private Long id = 3L;
 
-    protected String name;
+    private String name;
 
-    protected String description;
+    private String description;
 
-    protected Boolean isEnabled = true;
+    private Boolean isEnabled = true;
 
     private Set<Privilege> privileges = new HashSet<>();
 

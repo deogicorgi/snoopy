@@ -1,4 +1,4 @@
-package com.github.deogicorgi.snoopy.web.domain.user.service;
+package com.github.deogicorgi.snoopy.core.web.service;
 
 import com.github.deogicorgi.snoopy.core.model.User;
 

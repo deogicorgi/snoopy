@@ -1,15 +1,14 @@
-package com.github.deogicorgi.snoopy.web.domain.user.service;
+package com.github.deogicorgi.snoopy.core.web.service;
 
 import com.github.deogicorgi.snoopy.core.model.Role;
 import com.github.deogicorgi.snoopy.core.model.User;
-import com.github.deogicorgi.snoopy.core.model.UserStatus;
 import com.github.deogicorgi.snoopy.core.orm.entity.UserEntity;
 import com.github.deogicorgi.snoopy.core.orm.service.UserPersistService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.validator.routines.EmailValidator;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ObjectUtils;
 
 @Slf4j
@@ -21,14 +20,13 @@ public class UserServiceImpl implements UserService {
     private final BCryptPasswordEncoder passwordEncoder;
 
     @Override
+    @Transactional
     public User save(User user) {
 
-        validate(user);
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        user.setUserStatus(new UserStatus());
         user.setRole(new Role());
-        UserEntity savedEntity = userPersistService.save(new UserEntity.UserEntityBuilder(user).build());
-        return new User.UserBuilder(savedEntity).build();
+        UserEntity savedUser = userPersistService.save(new UserEntity.UserEntityBuilder(user).build());
+        return new User.UserBuilder(savedUser).build();
     }
 
     @Override
@@ -55,8 +53,6 @@ public class UserServiceImpl implements UserService {
     @Override
     public User update(User user) {
 
-        validate(user);
-
         UserEntity entity = userPersistService.update(new UserEntity.UserEntityBuilder(user).build());
 
         if (ObjectUtils.isEmpty(entity)) {
@@ -75,23 +71,4 @@ public class UserServiceImpl implements UserService {
      ************************ validate ************************
      **********************************************************/
 
-    /**
-     * Validate the User body data.
-     *
-     * @param user requested user body
-     */
-    private void validate(User user) {
-
-        if (ObjectUtils.isEmpty(user.getUsername())) {
-
-        }
-
-        if (ObjectUtils.isEmpty(user.getPassword())) {
-
-        }
-
-        if (!EmailValidator.getInstance().isValid(user.getEmail())) {
-            throw new RuntimeException("email!!");
-        }
-    }
 }

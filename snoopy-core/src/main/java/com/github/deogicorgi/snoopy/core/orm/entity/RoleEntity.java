@@ -30,10 +30,8 @@ public class RoleEntity {
 
     private Boolean isEnabled = false;
 
-    @ManyToMany
-    @JoinTable(name = "role_privilege",
-            joinColumns = @JoinColumn(name="role_id"),
-            inverseJoinColumns = @JoinColumn(name="privilege_id"))
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "role_privilege", joinColumns = @JoinColumn(name = "role_id"), inverseJoinColumns = @JoinColumn(name = "privilege_id"))
     private Set<PrivilegeEntity> privileges;
 
     private RoleEntity(RoleEntity.RoleEntityBuilder builder) {
@@ -56,10 +54,7 @@ public class RoleEntity {
             this.name = role.getName();
             this.description = role.getDescription();
             this.isEnabled = role.getIsEnabled();
-            this.privileges = role.getPrivileges()
-                    .stream()
-                    .map(privilege -> new PrivilegeEntity.PrivilegeEntityBuilder(privilege).build())
-                    .collect(Collectors.toSet());
+            this.privileges = role.getPrivileges().stream().map(privilege -> new PrivilegeEntity.PrivilegeEntityBuilder(privilege).build()).collect(Collectors.toSet());
         }
 
         @Override
