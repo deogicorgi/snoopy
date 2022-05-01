@@ -1,6 +1,7 @@
 package com.github.deogicorgi.snoopy.core.model;
 
 import com.github.deogicorgi.snoopy.core.orm.entity.PrivilegeEntity;
+import com.github.deogicorgi.snoopy.core.security.model.Authority;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -10,7 +11,7 @@ import lombok.ToString;
 @Setter
 @ToString
 @EqualsAndHashCode(of = "id")
-public class Privilege {
+public class Privilege implements Authority {
 
     private Long id;
 

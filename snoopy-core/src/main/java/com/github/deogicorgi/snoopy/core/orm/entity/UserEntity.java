@@ -29,22 +29,30 @@ public class UserEntity {
     @Column(unique = true, length = 100)
     private String email;
 
+    private Boolean isAccountLocked;
+
+    private Boolean isAccountExpired;
+
+    private Boolean isCredentialLocked;
+
+    private Boolean isEnabled;
+
     private String description;
 
     @OneToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "role_id")
     private RoleEntity role;
-
-    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "statusId")
-    private UserStatusEntity userStatus;
 
     private UserEntity(UserEntity.UserEntityBuilder builder) {
         this.id = builder.id;
         this.username = builder.username;
         this.password = builder.password;
         this.email = builder.email;
+        this.isAccountLocked = builder.isAccountLocked;
+        this.isAccountExpired = builder.isAccountExpired;
+        this.isCredentialLocked = builder.isCredentialLocked;
+        this.isEnabled = builder.isEnabled;
         this.description = builder.description;
-        this.userStatus = builder.userStatus;
         this.role = builder.role;
     }
 
@@ -54,7 +62,10 @@ public class UserEntity {
         private final String password;
         private final String email;
         private final String description;
-        private final UserStatusEntity userStatus;
+        private final Boolean isAccountLocked;
+        private final Boolean isAccountExpired;
+        private final Boolean isCredentialLocked;
+        private final Boolean isEnabled;
         private final RoleEntity role;
 
         public UserEntityBuilder(User user) {
@@ -63,7 +74,10 @@ public class UserEntity {
             this.password = user.getPassword();
             this.email = user.getEmail();
             this.description = user.getDescription();
-            this.userStatus = ObjectUtils.isEmpty(user.getUserStatus()) ? null : new UserStatusEntity.UserStatusEntityBuilder(user.getUserStatus()).build();
+            this.isAccountLocked = user.getIsAccountLocked();
+            this.isAccountExpired = user.getIsAccountExpired();
+            this.isCredentialLocked = user.getIsCredentialLocked();
+            this.isEnabled = user.getIsEnabled();
             this.role = ObjectUtils.isEmpty(user.getRole()) ? null : new RoleEntity.RoleEntityBuilder(user.getRole()).build();
         }
 
